@@ -1,0 +1,15 @@
+extends Sprite2D
+
+var speed = 100
+var player
+
+func _ready():
+	player = get_parent().get_node("Player")  # Assumes the player is a child of the same parent
+	set_process(true)
+
+func _process(delta):
+	# Calculate the direction vector towards the player
+	var direction = (player.global_position - global_position).normalized()
+
+	# Move towards the player
+	position += direction * speed * delta
