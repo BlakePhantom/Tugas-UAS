@@ -1,0 +1,22 @@
+extends Sprite2D
+
+var speed = 200
+
+func _process(delta):
+	var velocity = Vector2()  # Initial velocity is zero
+
+	# Check for input and update velocity
+	if Input.is_action_pressed("ui_right"):
+		velocity.x += 1
+	if Input.is_action_pressed("ui_left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		velocity.y += 1
+	if Input.is_action_pressed("ui_up"):
+		velocity.y -= 1
+
+	# Normalize and scale the velocity based on speed
+	velocity = velocity.normalized() * speed
+
+	# Move the player
+	position += velocity * delta
