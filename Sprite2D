@@ -20,3 +20,8 @@ func _process(delta):
 
 	# Move the player
 	position += velocity * delta
+
+	# Optional: Implement boundary checking to prevent the player from going outside the screen
+	var screen_size = get_viewport_rect().size
+	position.x = clamp(position.x, -250, screen_size.x)
+	position.y = clamp(position.y, -100, screen_size.y)
