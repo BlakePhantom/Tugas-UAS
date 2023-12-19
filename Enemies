@@ -1,10 +1,12 @@
-extends Sprite2D
+extends Node2D
 
-var speed = 100
+@export var speed = 800
+@export var hp = 20
+
 var player
 
 func _ready():
-	player = get_parent().get_node("Player")  # Assumes the player is a child of the same parent
+	player = get_tree().get_first_node_in_group("player")  # Assumes the player is a child of the same parent
 	set_process(true)
 
 func _process(delta):
