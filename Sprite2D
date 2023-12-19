@@ -1,6 +1,7 @@
 extends Sprite2D
 
-var speed = 200
+@export var speed = 1300
+@export var hp = 100
 
 func _process(delta):
 	var velocity = Vector2()  # Initial velocity is zero
@@ -22,6 +23,6 @@ func _process(delta):
 	position += velocity * delta
 
 	# Optional: Implement boundary checking to prevent the player from going outside the screen
-	var screen_size = get_viewport_rect().size
-	position.x = clamp(position.x, -250, screen_size.x)
-	position.y = clamp(position.y, -100, screen_size.y)
+	#var screen_size = get_viewport_rect().size
+	#position.x = clamp(position.x, -250, screen_size.x)
+	#position.y = clamp(position.y, -100, screen_size.y)
