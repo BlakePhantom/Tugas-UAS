@@ -27,8 +27,8 @@ func spawn_enemies(info: Spawn_info):
 		counter += 1
 
 func get_random_position():
-	var spawn_range_factor_min = 1.1
-	var spawn_range_factor_max = 1.4
+	var spawn_range_factor_min = 12.0
+	var spawn_range_factor_max = 13.0
 	var vpr = get_viewport_rect().size * randf_range(spawn_range_factor_min, spawn_range_factor_max)
 
 	var spawn_pos = Vector2(randf(), randf()) * vpr - vpr / 2.0 + player.global_position
