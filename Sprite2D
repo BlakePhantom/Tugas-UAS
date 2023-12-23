@@ -3,6 +3,26 @@ extends Sprite2D
 @export var speed = 500
 @export var hp = 100
 
+var bullet = preload("res://Bullet.tscn")
+
+@onready var BulletTimer = get_node("%BulletTimer")
+@onready var BulletTimerAttack = get_node("%BulletTimerAttack")
+
+var bullet_ammo = 0
+var bullet_baseammo = 1
+var bullet_attackspeed = 1.5
+var bullet_level = 1
+var enemy_close = []
+
+func _ready():
+	attack()
+	
+func attack():
+	if bullet_level > 0:
+		BulletTimer.wait_time = bullet_attackspeed
+		if BulletTimer.is_stopped():
+			BulletTimer.start()
+
 func _process(delta):
 	var velocity = Vector2()  # Initial velocity is zero
 
@@ -25,3 +45,35 @@ func _process(delta):
 func _on_hurtbox_hurt(damage):
 	hp -= damage
 	print(hp)
+
+
+func _on_bullet_timer_timeout():
+	bullet_ammo += bullet_baseammo
+	BulletTimerAttack.start()
+
+func _on_bullet_timer_attack_timeout():
+	if bullet_ammo > 0:
+		var bullet_attack = bullet.instantiate()
+		bullet_attack.position =position
+		bullet_attack.target = get_random_target()
+		bullet_attack.level = bullet_level
+		add_child(bullet_attack)
+		bullet_ammo -= 1
+		if bullet_ammo > 0:
+			BulletTimerAttack.start()
+		else:
+			BulletTimerAttack.stop() 
+		
+func get_random_target():
+	if enemy_close.size() > 0:
+		return enemy_close.pick_random().global_position
+	else:
+		return Vector2.UP
+		
+func _on_enemy_detection_area_body_entered(body):
+	if not enemy_close.has(body):
+		enemy_close.append(body)
+
+func _on_enemy_detection_area_body_exited(body):
+	if not enemy_close.has(body):
+		enemy_close.append(body)
